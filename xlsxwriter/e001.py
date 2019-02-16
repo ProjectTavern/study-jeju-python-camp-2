@@ -1,6 +1,6 @@
 import xlsxwriter
 
-workbook = xlsxwriter.Workbook('tutorial_1_5.xlsx')
+workbook = xlsxwriter.Workbook('student_score.xlsx')
 worksheet = workbook.add_worksheet()
 
 bold = workbook.add_format({'bold': True})
@@ -8,6 +8,7 @@ bold = workbook.add_format({'bold': True})
 columns = (
     ['국어', '영어', '수학', '과학', '평균', '합격여부']
 )
+
 student_math_score = (
     ['hojun', 95, 72, 36, 90],
     ['eunjung', 75, 42, 55, 62],
@@ -23,11 +24,8 @@ for rowIndex, scoreData in enumerate(student_math_score):
     for col, inform in enumerate(scoreData):
         worksheet.write(row, col, inform)
     average = '=AVERAGE(B' + str(row + 1) + ':E' + str(row + 1) + ')'
-    worksheet.write(row, len(scoreData), average)
     Pass = '=IF(F' + str(row + 1) + '>70,"Pass", "Fail")'
+    worksheet.write_formula(row, len(scoreData), average)
     worksheet.write_formula(row, len(scoreData) + 1, Pass)
 
 workbook.close()
-
-
-
